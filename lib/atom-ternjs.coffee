@@ -56,8 +56,19 @@ module.exports =
       , (err) ->
         console.error 'error', err
 
-  findDefinition: (editor) ->
-    console.log 'find definition triggered'
+  findDefinition: ->
+    editor = atom.workspace.getActiveEditor()
+    cursor = editor.getCursor()
+    position = cursor.getBufferPosition()
+    client.definition(editor.getUri(),
+      line: position.row
+      ch: position.column
+    editor.getText()).then (data) =>
+      if data?.start
+        buffer = editor.getBuffer()
+        cursor.setBufferPosition(buffer.positionForCharacterIndex(data.start))
+    , (err) ->
+      console.error 'error', err
 
   registerEvents: ->
     @atomTernjsView.on 'completed', (e, data) =>
@@ -68,6 +79,8 @@ module.exports =
 
     atom.workspace.onDidAddTextEditor ({item, pane, index}) =>
       @registerEditor(pane.items[index])
+
+
 
   registerEditors: ->
     atom.workspace.eachEditor (editor) =>

@@ -28,3 +28,17 @@ module.exports = (port) ->
         ]
     ).then (data) ->
       data
+  definition: (file, end, text) =>
+    View.post("http://localhost:#{port}",
+      JSON.stringify
+        query:
+          type: 'definition'
+          file: file
+          end: end
+        files: [
+          type: 'full'
+          name: file
+          text: text
+        ]
+    ).then (data) ->
+      data
