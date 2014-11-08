@@ -9,18 +9,9 @@ disposables = [];
 module.exports =
   activate: (state) ->
     @atomTernjsView = new AtomTernjsView(state.atomTernjsViewState)
-    @atomTernjsView.on 'completed', (evt, data) =>
-      if (data?.name)
-        start = [@start.line, @start.ch]
-        end = [@end.line, @end.ch]
-        atom.workspace.getActiveEditor().getBuffer().setTextInRange [start, end], (data.name || 'asd')
-      @registerEvents()
-
-    atom.workspace.onDidAddTextEditor ({item, pane, index}) =>
-      @registerEditor(pane.items[index])
-
     @startServer()
     @registerEvents()
+    @registerEditors()
 
   deactivate: ->
     @stopServer()
@@ -64,6 +55,16 @@ module.exports =
         console.error 'error', err
 
   registerEvents: ->
+    @atomTernjsView.on 'completed', (evt, data) =>
+      if (data?.name)
+        start = [@start.line, @start.ch]
+        end = [@end.line, @end.ch]
+        atom.workspace.getActiveEditor().getBuffer().setTextInRange [start, end], (data.name || 'asd')
+
+    atom.workspace.onDidAddTextEditor ({item, pane, index}) =>
+      @registerEditor(pane.items[index])
+
+  registerEditors: ->
     atom.workspace.eachEditor (editor) =>
       @registerEditor (editor)
 
