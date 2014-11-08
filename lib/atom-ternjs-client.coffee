@@ -11,11 +11,6 @@ module.exports = (port) ->
           guess: true
           lineCharPositions: true
           caseInsensitive: true
-        files: [
-          type: 'full'
-          name: file
-          text: text
-        ]
     ).then (data) ->
       data
   update: (file, text) =>
