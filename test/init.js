@@ -2,14 +2,14 @@ var TSTSTS = function () {
 
     var that = this;
 
-    this.$html = $('html');
-    this.$body = $('body');
-    this.$htmlBody = $('html, body');
-    this.$window = $(window);
     this.$document = $(document);
-    this.$content = $('#content');
+    this.obj = {
 
-    this.stdEvent = 'click';
+        foo: 1,
+        bar: 2
+    };
+    this.arr = [1, 2, 3];
+    this.str = 'foo';
 
     this.init = function () {
 
@@ -23,6 +23,7 @@ var TSTSTS = function () {
 
     this.registerHandler = function ($context) {
 
+        return false;
     };
 };
 
