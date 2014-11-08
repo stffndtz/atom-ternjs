@@ -16,6 +16,6 @@ Based on https://github.com/artoale/atom-tern
 
 Currently supports the following features:
 
-* Find definition (set your cursor position to one of variable, function or instance -> open context-menu and trigger "Find definition"), "Find definition" will only be available if atom wrapped the element correctly in one of: .variable.js, .function.js or .instance.js (see menus/atom-ternjs.coffee)
+* Find definition (set your cursor position to one of variable, function or instance -> open context-menu and trigger "Find definition"), "Find definition" will only be available if atom wrapped the element correctly in one of: .variable.js, .function.js or .instance.js (see menus/atom-ternjs.cson)
 * Completion (completion triggers if lastChar was "." and we are in the right context (e.g.: "this." -> triggers completion if completions.length > 0))
 * At the current state, only the current active editor is handled
