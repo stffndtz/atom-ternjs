@@ -60,8 +60,7 @@ class AtomTernjsView extends SelectListView
     false
 
   getFilterKey: -> 'name'
-
-  # Returns an object that can be retrieved when package is activated
+  
   setPosition: ->
     { left, top } = @editorView.pixelPositionForScreenPosition(@editor.getCursorScreenPosition())
     height = @outerHeight()
