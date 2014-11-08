@@ -7,9 +7,6 @@ class AtomTernjsView extends SelectListView
     # Create root element
     super
     @addClass 'atom-ternjs popover-list'
-    @filterEditorView.on 'textInput', (event) =>
-      {originalEvent} = event
-      text = originalEvent.data
 
   # Returns an object that can be retrieved when package is activated
   serialize: ->
