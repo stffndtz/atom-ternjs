@@ -24,7 +24,7 @@ module.exports =
 
   update: (editor) ->
     if client
-      client.update editor.getUri(), editor.getText()
+      client.update(editor.getUri(), editor.getText())
 
   isInString: (editor, cursor)->
     scopes = editor.scopeDescriptorForBufferPosition(cursor.getBufferPosition()).scopes
@@ -57,8 +57,8 @@ module.exports =
         console.error 'error', err
 
   registerEvents: ->
-    @atomTernjsView.on 'completed', (evt, data) =>
-      if (data?.name)
+    @atomTernjsView.on 'completed', (e, data) =>
+      if data?.name
         start = [@start.line, @start.ch]
         end = [@end.line, @end.ch]
         atom.workspace.getActiveEditor().getBuffer().setTextInRange([start, end], (data.name))
@@ -91,7 +91,8 @@ module.exports =
     @server.start (port) =>
       @ternPort = port
       client = new ClientFactory(port)
-      atom.workspaceView.command 'tern:completion', => @checkCompletion(atom.workspace.getActiveEditor(), yes)
+      atom.workspaceView.command 'tern:completion', =>
+        @checkCompletion(atom.workspace.getActiveEditor(), yes)
 
   stopServer: ->
     unless @server?.process

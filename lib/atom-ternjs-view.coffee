@@ -63,7 +63,7 @@ class AtomTernjsView extends SelectListView
 
   # Taken from https://atom.io/packages/autocomplete-plus
   setPosition: ->
-    { left, top } = @editorView.pixelPositionForScreenPosition @editor.getCursorScreenPosition()
+    { left, top } = @editorView.pixelPositionForScreenPosition(@editor.getCursorScreenPosition())
     cursorLeft = left
     cursorTop = top
 
