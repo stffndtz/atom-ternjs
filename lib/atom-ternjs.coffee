@@ -43,8 +43,9 @@ module.exports =
 
     prefix = cursor.getCurrentWordPrefix()
     if prefix[prefix.length - 1] is '.' or force is yes
-      row = cursor.getBufferRow()
-      col = cursor.getBufferColumn()
+      position = cursor.getBufferPosition()
+      row = position.row
+      col = position.column
       client.completions(editor.getUri(),
         line: row
         ch: col
