@@ -3,9 +3,14 @@
 module.exports =
 class AtomTernjsView extends SelectListView
 
+  bufferWasEmpty = true
+  buffer = false
+
   constructor: (serializeState) ->
     # Create root element
     super
+    bufferWasEmpty = true
+    buffer = @filterEditorView.getEditor().getBuffer()
     @addClass 'atom-ternjs popover-list'
 
   # Returns an object that can be retrieved when package is activated
@@ -18,6 +23,7 @@ class AtomTernjsView extends SelectListView
   cancelled: ->
     super
     @trigger 'completed'
+    @unregisterEvents()
 
   viewForItem: ({name, type}) ->
     $$ ->
@@ -28,6 +34,17 @@ class AtomTernjsView extends SelectListView
     @trigger 'completed', item
     @cancel()
     @detach()
+
+  registerEvents: ->
+    @filterEditorView.on 'keyup.ternjs', (e) =>
+      if e.which is 8 and bufferWasEmpty
+        @cancel()
+      else
+        bufferWasEmpty = false
+      bufferWasEmpty = buffer.isEmpty()
+
+  unregisterEvents: ->
+    @filterEditorView.off 'keyup.ternjs'
 
   handleEvents: ->
     @editorView.off 'tern:next'
@@ -59,6 +76,7 @@ class AtomTernjsView extends SelectListView
 
   afterAttach: (onDom) ->
     if onDom
+      @registerEvents()
       widestCompletion = parseInt(@css('min-width')) or 0
       @list.find('span').each ->
         widestCompletion = Math.max(widestCompletion, $(this).outerWidth())
