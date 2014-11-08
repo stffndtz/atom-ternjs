@@ -33,7 +33,6 @@ class AtomTernjsView extends SelectListView
   confirmed: (item) ->
     @trigger 'completed', item
     @cancel()
-    @detach()
 
   registerEvents: ->
     @filterEditorView.on 'keyup.ternjs', (e) =>
