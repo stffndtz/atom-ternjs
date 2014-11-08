@@ -80,8 +80,6 @@ module.exports =
     atom.workspace.onDidAddTextEditor ({item, pane, index}) =>
       @registerEditor(pane.items[index])
 
-
-
   registerEditors: ->
     atom.workspace.eachEditor (editor) =>
       @registerEditor (editor)
