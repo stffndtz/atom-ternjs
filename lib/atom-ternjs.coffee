@@ -37,7 +37,6 @@ module.exports =
     cursor = editor.getCursor()
 
     if @isInString(editor, cursor)
-      console.log 'skip -> cursor is inside string'
       return
 
     prefix = cursor.getCurrentWordPrefix()
