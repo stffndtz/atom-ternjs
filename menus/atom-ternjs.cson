@@ -1,7 +1,9 @@
 # See https://atom.io/docs/latest/creating-a-package#menus for more details
 'context-menu':
-  'atom-text-editor': [
+  '.variable.js, .function.js, .instance.js': [
     {
+      label: 'Find definition',
+      command: 'tern:definition'
     }
   ]
 'menu': [

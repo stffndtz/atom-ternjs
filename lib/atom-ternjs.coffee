@@ -56,6 +56,9 @@ module.exports =
       , (err) ->
         console.error 'error', err
 
+  findDefinition: (editor) ->
+    console.log 'find definition triggered'
+
   registerEvents: ->
     @atomTernjsView.on 'completed', (e, data) =>
       if data?.name
@@ -93,6 +96,8 @@ module.exports =
       client = new ClientFactory(port)
       atom.workspaceView.command 'tern:completion', =>
         @checkCompletion(atom.workspace.getActiveEditor(), yes)
+      atom.workspaceView.command 'tern:definition', =>
+        @findDefinition(atom.workspace.getActiveEditor())
 
   stopServer: ->
     unless @server?.process
