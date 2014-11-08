@@ -61,7 +61,7 @@ module.exports =
       if (data?.name)
         start = [@start.line, @start.ch]
         end = [@end.line, @end.ch]
-        atom.workspace.getActiveEditor().getBuffer().setTextInRange [start, end], (data.name || 'asd')
+        atom.workspace.getActiveEditor().getBuffer().setTextInRange [start, end], (data.name)
 
     atom.workspace.onDidAddTextEditor ({item, pane, index}) =>
       @registerEditor(pane.items[index])
