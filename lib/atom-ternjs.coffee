@@ -4,6 +4,8 @@ ClientFactory = require './atom-ternjs-client'
 _ = require 'underscore-plus'
 
 client = null;
+disposables = [];
+
 module.exports =
   activate: (state) ->
     @atomTernjsView = new AtomTernjsView(state.atomTernjsViewState)
@@ -22,6 +24,8 @@ module.exports =
 
   deactivate: ->
     @stopServer()
+    atom.workspaceView.command "tern:completion", => null
+    @unregisterEvents()
     @atomTernjsView.destroy()
 
   serialize: ->
@@ -67,15 +71,15 @@ module.exports =
     if editor.getGrammar().name isnt 'JavaScript'
       return
     buffer = editor.getBuffer()
-    buffer.on 'contents-modified', _.throttle @update.bind(this, editor), 2000
-    buffer.on 'contents-modified', @checkCompletion.bind(this, editor, false)
+    disposables.push buffer.onDidStopChanging =>
+      _.throttle @update(editor), 2000
+    disposables.push buffer.onDidStopChanging =>
+      @checkCompletion(editor, false)
 
   unregisterEvents: ->
-    atom.workspace.eachEditor (editor) =>
-      if editor.getGrammar().name isnt 'JavaScript'
-        return
-      buffer = editor.getBuffer()
-      buffer.off 'contents-modified'
+    for disposable in disposables
+      disposable.dispose()
+    disposables = []
 
   startServer: ->
     if @server?.process
@@ -89,6 +93,4 @@ module.exports =
   stopServer: ->
     unless @server?.process
       return
-    atom.workspaceView.command "tern:completion", => null
-    @unregisterEvents()
     @server.stop()
