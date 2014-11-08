@@ -78,12 +78,3 @@ class AtomTernjsView extends SelectListView
       @setPosition()
       @handleEvents()
       @focusFilterEditor()
-
-  # Toggle the visibility of this view
-  toggle: ->
-    console.log 'AtomTernjsView was toggled!'
-
-    if @element.parentElement?
-      @element.remove()
-    else
-      atom.workspaceView.append(@element)
