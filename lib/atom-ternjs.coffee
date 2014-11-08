@@ -24,7 +24,7 @@ module.exports =
 
   deactivate: ->
     @stopServer()
-    atom.workspaceView.command "tern:completion", => null
+    atom.workspaceView.command 'tern:completion', => null
     @unregisterEvents()
     @atomTernjsView.destroy()
 
@@ -88,7 +88,7 @@ module.exports =
     @server.start (port) =>
       @ternPort = port
       client = new ClientFactory(port)
-      atom.workspaceView.command "tern:completion", => @checkCompletion(atom.workspace.getActiveEditor(), yes)
+      atom.workspaceView.command 'tern:completion', => @checkCompletion(atom.workspace.getActiveEditor(), yes)
 
   stopServer: ->
     unless @server?.process
