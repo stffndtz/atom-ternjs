@@ -36,6 +36,8 @@ module.exports =
   checkCompletion: (editor, force = false) ->
     cursor = editor.getCursor()
 
+    if !cursor.hasPrecedingCharactersOnLine()
+      return
     if @isInString(editor, cursor)
       return
 
