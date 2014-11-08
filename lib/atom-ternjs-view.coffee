@@ -96,12 +96,10 @@ class AtomTernjsView extends SelectListView
       @width(@list.outerWidth())
 
   startCompletion: (completions)  ->
-    @setItems completions
-    if !@hasParent()
-      # atom.workspaceView.append(this)
-      @editorView = atom.workspaceView.getActivePaneView().activeView
-      @editorView?.appendToLinesView(this)
-      @editor = @editorView?.getEditor()
-      @setPosition()
-      @handleEvents()
-      @focusFilterEditor()
+    @setItems(completions)
+    @editorView = atom.workspaceView.getActivePaneView().activeView
+    @editorView?.appendToLinesView(this)
+    @editor = @editorView?.getEditor()
+    @setPosition()
+    @handleEvents()
+    @focusFilterEditor()
