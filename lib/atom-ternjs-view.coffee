@@ -11,7 +11,7 @@ class AtomTernjsView extends SelectListView
     super
     bufferWasEmpty = true
     buffer = @filterEditorView.getEditor().getBuffer()
-    @addClass 'atom-ternjs popover-list'
+    @addClass 'atom-ternjs text-normal'
 
   # Returns an object that can be retrieved when package is activated
   serialize: ->
@@ -68,7 +68,9 @@ class AtomTernjsView extends SelectListView
     cursorTop = top
 
     # The top position if we would put it below the current line
-    belowPosition = cursorTop + @editorView.lineHeight
+    # put it right into the line
+    belowPosition = cursorTop
+    #@editorView.lineHeight
 
     # The top position of the lower edge if we would put it below the current line
     belowLowerPosition = belowPosition + @outerHeight()
@@ -83,8 +85,10 @@ class AtomTernjsView extends SelectListView
       @css '-webkit-transform', 'translateY(-100%)'
     else
       # We can put it below, remove possible previous CSS transforms
-      @css left: cursorLeft, top: belowPosition
+      @css left: cursorLeft, top: cursorTop
       @css '-webkit-transform', ''
+
+    console.log @editorView.lineHeight
 
   afterAttach: (onDom) ->
     if onDom
@@ -96,6 +100,12 @@ class AtomTernjsView extends SelectListView
       @width(@list.outerWidth())
 
   startCompletion: (completions)  ->
+
+    if atom.config.get('atom-ternjs.inlineCompletion')
+      @addClass 'inline'
+    else
+      @addClass 'popover-list'
+    console.log atom.config.get('atom-ternjs.inlineCompletion')
     @setItems(completions)
     @editorView = atom.workspaceView.getActivePaneView().activeView
     @editorView?.appendToLinesView(this)

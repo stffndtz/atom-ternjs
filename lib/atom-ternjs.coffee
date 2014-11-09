@@ -6,12 +6,14 @@ _ = require 'underscore-plus'
 client = null;
 disposables = [];
 
-#public: expose package namespace
+#public: init package namespace
 class AtomTernInitializer
 
   #add settings
-  configDefaults:
-    inlineCompletion: false
+  config:
+    inlineCompletion:
+      type: 'boolean'
+      default: false
 
   activate: (state) ->
     @atomTernjsView = new AtomTernjsView(state.atomTernjsViewState)
@@ -122,4 +124,5 @@ class AtomTernInitializer
       return
     @server.stop()
 
+#epose init class
 module.exports = new AtomTernInitializer()
