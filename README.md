@@ -8,7 +8,7 @@ Based on https://github.com/artoale/atom-tern
 
 # Installation
 
-* Since this package has'nt been released as an package, clone and npm install
+* Since this package hasn't been released as a package, clone and npm install
 * Create a symlink to the cloned repo in /Users/.../.atom/packages like so:
 ```
   $ ln -s /path/to/repo /path/to/symlink
