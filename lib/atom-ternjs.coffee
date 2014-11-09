@@ -46,15 +46,17 @@ module.exports =
       position = cursor.getBufferPosition()
       row = position.row
       col = position.column
-      client.completions(editor.getUri(),
-        line: row
-        ch: col
-      editor.getText()).then (data) =>
-        if data.completions.length
-          {@start, @end} = data
-          @atomTernjsView.startCompletion(data.completions)
-      , (err) ->
-        console.error 'error', err
+      console.log client
+      if client
+        client.completions(editor.getUri(),
+          line: row
+          ch: col
+        editor.getText()).then (data) =>
+          if data.completions.length
+            {@start, @end} = data
+            @atomTernjsView.startCompletion(data.completions)
+        , (err) ->
+          console.error 'error', err
 
   findDefinition: ->
     editor = atom.workspace.getActiveEditor()
@@ -106,7 +108,7 @@ module.exports =
       @ternPort = port
       client = new ClientFactory(port)
       atom.workspaceView.command 'tern:completion', =>
-        @checkCompletion(atom.workspace.getActiveEditor(), yes)
+        @checkCompletion(atom.workspace.getActiveEditor(), false)
       atom.workspaceView.command 'tern:definition', =>
         @findDefinition(atom.workspace.getActiveEditor())
 
