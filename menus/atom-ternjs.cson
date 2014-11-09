@@ -10,6 +10,12 @@
   {
     'label': 'Packages'
     'submenu': [
+      {
+        'label': 'Tern'
+        'submenu': [
+
+        ]
+      }
     ]
   }
 ]

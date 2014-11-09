@@ -6,12 +6,14 @@ _ = require 'underscore-plus'
 client = null;
 disposables = [];
 
-#public: expose package namespace
+#public: init package namespace
 class AtomTernInitializer
 
   #add settings
-  configDefaults:
-    inlineCompletion: false
+  config:
+    inlineCompletion:
+      type: 'boolean'
+      default: false
 
   activate: (state) ->
     @atomTernjsView = new AtomTernjsView(state.atomTernjsViewState)
@@ -52,7 +54,6 @@ class AtomTernInitializer
       position = cursor.getBufferPosition()
       row = position.row
       col = position.column
-      console.log client
       if client
         client.completions(editor.getUri(),
           line: row
@@ -123,4 +124,5 @@ class AtomTernInitializer
       return
     @server.stop()
 
+#epose init class
 module.exports = new AtomTernInitializer()
