@@ -46,7 +46,6 @@ module.exports =
       position = cursor.getBufferPosition()
       row = position.row
       col = position.column
-      console.log client
       if client
         client.completions(editor.getUri(),
           line: row
